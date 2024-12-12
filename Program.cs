@@ -12,6 +12,15 @@ namespace MainProgram
 
             Console.WriteLine(v1);
             Console.WriteLine(v2);
+            
+            Parc parc = new Parc();
+            parc.AjouterVoiture(v1);
+            parc.AjouterVoiture(v2);
+            Console.WriteLine(" ");
+            parc.LouerVoiture();
+            Console.WriteLine(" ");
+            parc.ListerVoiture();
+
         }
     }
 }
