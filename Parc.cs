@@ -27,30 +27,29 @@ namespace LocationVoiture
 
         public void LouerVoiture()
         {
-            foreach (Voiture voiture in voitures)
-            {   
-                if (voiture.Statut == "Disponible"){
-                    Console.WriteLine(voiture);
-                }
-            }
-            int id_louable;
-            while (true)
+            var disponibles = voitures.Where(v => v.Statut == "Disponible").ToList();
+            if (!disponibles.Any())
             {
-                try 
-                {
-                    id_louable = int.Parse(Console.ReadLine());
-                    break;
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Entrée invalide. Veuillez entrer un ID valide.");
-                }
+                Console.WriteLine("Aucune voiture disponible.");
+                return;
             }
-            
-            Voiture voitureLouee = voitures.Find(v => v.Id == id_louable);
+            disponibles.ForEach(Console.WriteLine);
 
-            voitureLouee.Statut = "Indisponible";
-                
+            int id_louable;
+            while (!int.TryParse(Console.ReadLine(), out id_louable) || !disponibles.Any(v => v.Id == id_louable))
+            {
+                Console.WriteLine("Entrée invalide. Veuillez entrer un ID valide.");
+            }
+
+            var voitureLouee = disponibles.FirstOrDefault(v => v.Id == id_louable);
+            if (voitureLouee != null)
+            {
+                voitureLouee.Statut = "Indisponible";
+            }
+            else
+            {
+                Console.WriteLine("Voiture non trouvée.");
+            }
         }
 
     }

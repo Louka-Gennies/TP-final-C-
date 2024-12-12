@@ -20,6 +20,10 @@ namespace MainProgram
             parc.LouerVoiture();
             Console.WriteLine(" ");
             parc.ListerVoiture();
+            Console.WriteLine(" ");
+            parc.LouerVoiture();
+            Console.WriteLine(" ");
+            parc.ListerVoiture();
 
         }
     }
