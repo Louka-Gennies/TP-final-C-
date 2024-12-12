@@ -6,14 +6,37 @@ namespace LocationVoiture
     {
         public List<Voiture> voitures = new List<Voiture>();
 
+        private Dictionary<string, List<string>> dictionnaireVoitures = new Dictionary<string, List<string>>
+        {
+            { "Toyota", new List<string> { "Corolla", "Camry", "Prius" } },
+            { "Honda", new List<string> { "Civic", "Accord", "Fit" } },
+            { "Ford", new List<string> { "Focus", "Mustang", "Fiesta" } },
+            { "BMW", new List<string> { "X5", "X3", "3 Series" } },
+            { "Audi", new List<string> { "A4", "A6", "Q5" } }
+        };
+
         public Parc()
         {
             
         }
 
-        public void AjouterVoiture(Voiture voiture) 
-        {
-            voitures.Add(voiture);
+        public void AjouterVoiture() 
+        {   
+            int id = voitures.Count + 1;
+
+            string[] marques = dictionnaireVoitures.Keys.ToArray();
+            string marque = MenuDeroulant(marques);
+
+            string[] modeles = dictionnaireVoitures[marque].ToArray();
+            string modele = MenuDeroulant(modeles);
+
+            int annee_voiture;
+            while (!int.TryParse(Console.ReadLine(), out annee_voiture) || annee_voiture < 1900 || annee_voiture > 2024)
+            {
+                Console.WriteLine("Veuillez entrer une année valide entre 1900 et 2024.");
+            }
+
+            voitures.Add(new Voiture(id, marque, modele, annee_voiture, "Disponible"));
         }
 
         public void ListerVoiture()
@@ -79,5 +102,47 @@ namespace LocationVoiture
             }
         }
 
+
+        public string MenuDeroulant(string[] options)
+        {
+            int currentSelection = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Utilisez les flèches haut/bas pour naviguer et appuyez sur Entrée pour sélectionner.");
+
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (i == currentSelection)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"> {options[i]}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  {options[i]}");
+                    }
+                }
+
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+                if (keyInfo.Key == ConsoleKey.UpArrow)
+                {
+                    currentSelection = (currentSelection == 0) ? options.Length - 1 : currentSelection - 1;
+                }
+                else if (keyInfo.Key == ConsoleKey.DownArrow)
+                {
+                    currentSelection = (currentSelection == options.Length - 1) ? 0 : currentSelection + 1;
+                }
+                else if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Vous avez sélectionné : {options[currentSelection]}");
+                    return options[currentSelection];
+                }
+            }
+        }
     }
 }
