@@ -1,5 +1,5 @@
-﻿using System;
-using LocationVoiture;
+﻿using LocationVoiture;
+using GameManager;
 
 namespace MainProgram
 {
@@ -7,23 +7,9 @@ namespace MainProgram
     {
         static void Main(string[] args)
         {
-            Voiture v1 = new Voiture(1, "Peugeot", "208", 2019, "Disponible");
-            Voiture v2 = new Voiture(2, "Renault", "Clio", 2018, "Indisponible");
 
-            Console.WriteLine(v1);
-            Console.WriteLine(v2);
-            
-            Parc parc = new Parc();
-            parc.AjouterVoiture();
-            parc.AjouterVoiture();
-            Console.WriteLine(" ");
-            parc.LouerVoiture();
-            Console.WriteLine(" ");
-            parc.ListerVoiture();
-            Console.WriteLine(" ");
-            parc.LouerVoiture();
-            Console.WriteLine(" ");
-            parc.ListerVoiture();
+            Menu menu = new Menu();
+            menu.GameManager();
 
         }
     }

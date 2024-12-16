@@ -31,6 +31,7 @@ namespace LocationVoiture
             string modele = MenuDeroulant(modeles);
 
             int annee_voiture;
+            Console.WriteLine("Renseignez l'année de la voiture (entre 1900 et 2024)");
             while (!int.TryParse(Console.ReadLine(), out annee_voiture) || annee_voiture < 1900 || annee_voiture > 2024)
             {
                 Console.WriteLine("Veuillez entrer une année valide entre 1900 et 2024.");
@@ -46,59 +47,52 @@ namespace LocationVoiture
             {
                 Console.WriteLine(voiture);
             }
+            Console.WriteLine("Appuyez sur une touche pour continuer...");
+            Console.ReadKey();
         }
 
         public void LouerVoiture()
         {
-            var disponibles = voitures.Where(v => v.Statut == "Disponible").ToList();
+            var disponibles = voitures.Where(v => v.Statut == "Disponible").ToArray();
             if (!disponibles.Any())
             {
                 Console.WriteLine("Aucune voiture disponible.");
                 return;
             }
-            disponibles.ForEach(Console.WriteLine);
 
-            int id_louable;
-            while (!int.TryParse(Console.ReadLine(), out id_louable) || !disponibles.Any(v => v.Id == id_louable))
-            {
-                Console.WriteLine("Entrée invalide. Veuillez entrer un ID valide.");
-            }
+            string[] options = disponibles.Select(v => v.ToString()).ToArray();
+            string selection = MenuDeroulant(options);
 
-            var voitureLouee = disponibles.FirstOrDefault(v => v.Id == id_louable);
+            var voitureLouee = disponibles.FirstOrDefault(v => v.ToString() == selection);
             if (voitureLouee != null)
             {
                 voitureLouee.Statut = "Indisponible";
             }
             else
             {
-                Console.WriteLine("Voiture non trouvée.");
+                Console.WriteLine("Erreur lors de la location de la voiture.");
             }
         }
 
         public void RendreVoiture()
         {
-            var indisponibles = voitures.Where(v => v.Statut == "Indisponible").ToList();
+            var indisponibles = voitures.Where(v => v.Statut == "Indisponible").ToArray();
             if (!indisponibles.Any())
             {
                 Console.WriteLine("Aucune voiture à rendre");
                 return;
             }
-            indisponibles.ForEach(Console.WriteLine);
+            string[] options = indisponibles.Select(v => v.ToString()).ToArray();
+            string selection = MenuDeroulant(options);
 
-            int id_rendre;
-            while (!int.TryParse(Console.ReadLine(), out id_rendre) || !indisponibles.Any(v => v.Id == id_rendre))
+             var voitureLouee = indisponibles.FirstOrDefault(v => v.ToString() == selection);
+            if (voitureLouee != null)
             {
-                 Console.WriteLine("Entrée invalide. Veuillez entrer un ID valide.");
+                voitureLouee.Statut = "Disponible";
             }
-
-            var voitureRendu = indisponibles.FirstOrDefault(v => v.Id == id_rendre);
-            if (voitureRendu != null)
+            else
             {
-                voitureRendu.Statut = "Disponible";
-            }
-            else 
-            {
-                Console.WriteLine("Voiture non trouvée.");
+                Console.WriteLine("Erreur lors de la location de la voiture.");
             }
         }
 
