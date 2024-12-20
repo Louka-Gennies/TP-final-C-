@@ -17,7 +17,9 @@ namespace LocationVoiture
 
         public Parc()
         {
-            
+            voitures.Add(new Voiture(2, "BMW", "X5", 2018, "Indisponible"));
+            voitures.Add(new Voiture(1, "Ford", "Focus", 2019, "Disponible"));
+            voitures.Add(new Voiture(3, "Ford", "Fiesta", 2020, "Disponible"));
         }
 
         public void AjouterVoiture() 
@@ -27,11 +29,13 @@ namespace LocationVoiture
             string[] marques = dictionnaireVoitures.Keys.ToArray();
             string marque = MenuDeroulant(marques);
 
+
             string[] modeles = dictionnaireVoitures[marque].ToArray();
             string modele = MenuDeroulant(modeles);
 
             int annee_voiture;
             Console.WriteLine("Renseignez l'année de la voiture (entre 1900 et 2024)");
+
             while (!int.TryParse(Console.ReadLine(), out annee_voiture) || annee_voiture < 1900 || annee_voiture > 2024)
             {
                 Console.WriteLine("Veuillez entrer une année valide entre 1900 et 2024.");
