@@ -17,7 +17,7 @@ namespace LocationVoiture
 
         public Parc()
         {
-            voitures.Add(new Voiture(2, "BMW", "X5", 2018, "Indisponible"));
+            voitures.Add(new Voiture(2, "BMW", "X5", 2018, "Disponible"));
             voitures.Add(new Voiture(1, "Ford", "Focus", 2019, "Disponible"));
             voitures.Add(new Voiture(3, "Ford", "Fiesta", 2020, "Disponible"));
         }
